@@ -1,6 +1,6 @@
 import PlayCircleOutlinedIcon from '@mui/icons-material/PlayCircleOutlined';
 import ControlPointOutlinedIcon from '@mui/icons-material/ControlPointOutlined';
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import MovieDetailCard from './MovieDetailCard';
 
@@ -8,42 +8,34 @@ interface Props {
   movieName: string;
   posterImg: string;
   handleClick: Function;
-  setMovieIndex: Function;
   index: number;
-  setNewIndex: Function;
+  // setNewIndex: Function;
   showDetails?: boolean;
   movieData?: any;
+  prevIndex: MutableRefObject<number | null>;
 }
 
 export default function MovieCard({
   movieName,
   posterImg,
   handleClick,
-  setMovieIndex,
   index,
-  setNewIndex,
+  // setNewIndex,
   showDetails = false,
-  movieData
+  movieData,
+  prevIndex
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [prevItems, setPrevItems] = useState(index);
-
   const handleCardClick = () => {
-    setMovieIndex(index);
-    handleClick(index);
     if (ref.current !== null) {
       let parent = ref.current.parentNode;
       const currentIndex = Array.prototype.indexOf.call(
         parent!.children,
         ref.current
       );
-
-      console.log(index, prevItems);
-      if (index <= prevItems) {
-        setNewIndex(currentIndex);
-      } else {
-        setNewIndex(currentIndex - 1);
-      }
+      console.log(prevIndex.current, currentIndex);
+      if (currentIndex <= prevIndex.current!) handleClick(currentIndex);
+      else handleClick(currentIndex - 1);
     }
   };
 

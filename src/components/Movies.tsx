@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import MovieCard from './MovieCard';
 import { useWindowDimensions } from '../hooks/useWindowDimentions';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import MovieDetailCardMobile from './MovieDetailCardMobile';
 
 const drawerBleeding = 56;
@@ -27,15 +27,22 @@ export default function Movies({ movieData }: { movieData: any }) {
   const [open, setOpen] = useState(false);
   const { windowWidth } = useWindowDimensions();
   const [movieIndex, setMovieIndex] = useState(0);
-  const [newIndex, setNewIndex] = useState(99999);
-  const [filteredData, setFilteredData] = useState(() => movieData);
+  const [filteredData, setFilteredData] = useState(movieData);
+  const prevIndex = useRef<number | null>(Number.MAX_VALUE);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
   const handleClick = (i: number) => {
-    const dd = [...movieData.slice(0, i), movieData[i], ...movieData.slice(i)];
+    setMovieIndex(i);
+    console.log(movieIndex, i);
+    prevIndex.current = i;
+    const dd = [
+      ...movieData.slice(0, i),
+      movieData[movieIndex],
+      ...movieData.slice(i)
+    ];
     setFilteredData(dd);
     setOpen(true);
   };
@@ -47,17 +54,17 @@ export default function Movies({ movieData }: { movieData: any }) {
           filteredData.map((movie: any, index: number) => {
             return (
               <>
-                {index === newIndex ? (
+                {index === movieIndex ? (
                   <MovieCard
-                    key={`${movie.Title}extended`}
+                    key={`${movie.Title}-extended`}
                     movieName={movie.Title}
                     posterImg={movie.Poster}
                     handleClick={handleClick}
-                    setMovieIndex={setMovieIndex}
                     index={index}
-                    setNewIndex={setNewIndex}
+                    // setNewIndex={setNewIndex}
                     showDetails={true}
                     movieData={movieData}
+                    prevIndex={prevIndex}
                   />
                 ) : (
                   <MovieCard
@@ -65,9 +72,9 @@ export default function Movies({ movieData }: { movieData: any }) {
                     movieName={movie.Title}
                     posterImg={movie.Poster}
                     handleClick={handleClick}
-                    setMovieIndex={setMovieIndex}
                     index={index}
-                    setNewIndex={setNewIndex}
+                    // setNewIndex={setNewIndex}
+                    prevIndex={prevIndex}
                   />
                 )}
               </>
@@ -113,7 +120,9 @@ export default function Movies({ movieData }: { movieData: any }) {
               }}
             >
               {movieData.length ? (
-                <MovieDetailCardMobile movie={movieData[movieIndex]} />
+                <MovieDetailCardMobile
+                  movie={movieData[movieIndex === 999 ? 0 : movieIndex]}
+                />
               ) : null}
             </StyledBox>
           </SwipeableDrawer>
