@@ -1,82 +1,46 @@
-import { Global } from '@emotion/react';
-import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { grey } from '@mui/material/colors';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import MovieCard from './MovieCard';
 import { useWindowDimensions } from '../hooks/useWindowDimentions';
-import { useRef, useState } from 'react';
-import MovieDetailCardMobile from './MovieDetailCardMobile';
-
-const drawerBleeding = 56;
-
-const Root = styled('div')(({ theme }) => ({
-  height: '100%',
-  backgroundColor:
-    theme.palette.mode === 'light'
-      ? grey[100]
-      : theme.palette.background.default
-}));
-
-const StyledBox = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800]
-}));
+import { useContext, useState } from 'react';
+import MovieDetailCard from './MovieDetailCard';
+import Modal from './Modal';
+import { MovieDetailsContext } from '../context/showDetailsContext';
 
 export default function Movies({ movieData }: { movieData: any }) {
-  const [open, setOpen] = useState(false);
   const { windowWidth } = useWindowDimensions();
-  const [movieIndex, setMovieIndex] = useState(0);
-  const [filteredData, setFilteredData] = useState(movieData);
-  const prevIndex = useRef<number | null>(Number.MAX_VALUE);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  const handleClick = (i: number) => {
-    setMovieIndex(i);
-    console.log(movieIndex, i);
-    prevIndex.current = i;
-    const dd = [
-      ...movieData.slice(0, i),
-      movieData[movieIndex],
-      ...movieData.slice(i)
-    ];
-    setFilteredData(dd);
-    setOpen(true);
-  };
-
+  const [showMobileDetails, setShowMobileDetails] = useState(false);
+  const movieContext = useContext(MovieDetailsContext);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [data, setData] = useState<any>([]);
+  const [modalIndex, setModalIndex] = useState(0);
   return (
     <>
       <div className="movies flex flex-wrap gap-8 justify-between">
-        {filteredData.length ? (
-          filteredData.map((movie: any, index: number) => {
+        {movieData.length ? (
+          movieData.map((movie: any, index: number) => {
             return (
               <>
-                {index === movieIndex ? (
-                  <MovieCard
-                    key={`${movie.Title}-extended`}
-                    movieName={movie.Title}
-                    posterImg={movie.Poster}
-                    handleClick={handleClick}
-                    index={index}
-                    // setNewIndex={setNewIndex}
-                    showDetails={true}
-                    movieData={movieData}
-                    prevIndex={prevIndex}
-                  />
-                ) : (
-                  <MovieCard
-                    key={movie.Title}
-                    movieName={movie.Title}
-                    posterImg={movie.Poster}
-                    handleClick={handleClick}
-                    index={index}
-                    // setNewIndex={setNewIndex}
-                    prevIndex={prevIndex}
+                {movieContext?.showDetails && index === selectedIndex && (
+                  <MovieDetailCard
+                    key={index + 101}
+                    Title={movie.Title}
+                    Poster={data.Poster}
+                    imdbRating={data.imdbRating}
+                    Year={data.Year}
+                    Runtime={data.Runtime}
+                    Director={data.Director}
+                    Plot={data.Plot}
+                    Language={data.Language}
                   />
                 )}
+                <MovieCard
+                  key={index}
+                  movie={movie}
+                  setSelectedIndex={setSelectedIndex}
+                  index={index}
+                  setData={setData}
+                  setModalIndex={setModalIndex}
+                  setShowMobileDetails={setShowMobileDetails}
+                />
               </>
             );
           })
@@ -85,48 +49,18 @@ export default function Movies({ movieData }: { movieData: any }) {
         )}
       </div>
 
-      {windowWidth <= 495 && (
-        <Root>
-          <CssBaseline />
-          <Global
-            styles={{
-              '.MuiDrawer-root > .MuiPaper-root': {
-                height: `calc(50% - ${drawerBleeding}px)`,
-                overflow: 'visible',
-                backgroundColor: '#394B61',
-                borderTopLeftRadius: '15px',
-                borderTopRightRadius: '15px'
-              }
-            }}
-          />
-          <SwipeableDrawer
-            anchor="bottom"
-            open={open}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-            swipeAreaWidth={drawerBleeding}
-            disableSwipeToOpen={false}
-            ModalProps={{
-              keepMounted: true
-            }}
-          >
-            <StyledBox
-              sx={{
-                height: '100%',
-                overflow: 'auto',
-                backgroundColor: '#394B61',
-                borderTopLeftRadius: '15px',
-                borderTopRightRadius: '15px'
-              }}
-            >
-              {movieData.length ? (
-                <MovieDetailCardMobile
-                  movie={movieData[movieIndex === 999 ? 0 : movieIndex]}
-                />
-              ) : null}
-            </StyledBox>
-          </SwipeableDrawer>
-        </Root>
+      {windowWidth <= 736 && showMobileDetails && (
+        <Modal
+          setShowModal={setShowMobileDetails}
+          Title={movieData[modalIndex].Title}
+          Poster={movieData[modalIndex].Poster}
+          imdbRating={movieData[modalIndex].imdbRating}
+          Year={movieData[modalIndex].Year}
+          Runtime={movieData[modalIndex].Runtime}
+          Director={movieData[modalIndex].Director}
+          Plot={movieData[modalIndex].Plot}
+          Language={movieData[modalIndex].Language}
+        />
       )}
     </>
   );

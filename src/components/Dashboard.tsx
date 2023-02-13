@@ -11,14 +11,14 @@ export default function Dashboard() {
   const filterMovies = (text: string) => {
     const searchedMovies = movieData.filter(
       (movie) =>
-        movie.Title.toLocaleLowerCase().indexOf(text.toLocaleLowerCase()) != -1
+        movie?.Title.toLocaleLowerCase().indexOf(text.toLocaleLowerCase()) != -1
     );
     setfilteredMovies(searchedMovies);
   };
   const fetcData = debounce(filterMovies, 1000);
 
   return (
-    <div className="w-full h-screen bg-[#273244]">
+    <div className="w-full h-screen bg-[#273244] overflow-auto">
       <Navbar handleSearchInput={fetcData} />
       <Feed movieData={filteredMovies} />
     </div>

@@ -25,15 +25,17 @@ body {
   /* outline: 1px solid slategrey; */
 }
 
-@media (max-width: 1035px) {
+@media (max-width: 1044px) {
   .sidebar {
     display: none;
   }
 
   .movie-feed {
     max-height: 82%;
-    padding-left: 0px;
-    padding-right: 0px;
+  }
+
+  .menu {
+    display: block;
   }
 }
 
@@ -72,7 +74,8 @@ body {
   }
 
   .movie-feed {
-    max-height: 82%;
+    max-height: 60%;
+    padding: 0px 10%;
   }
 
   .search-box {
@@ -81,5 +84,9 @@ body {
 
   .search-clear {
     left: 230px;
+  }
+
+  .movie-details-card {
+    display: none;
   }
 }

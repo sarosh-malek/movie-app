@@ -1,9 +1,16 @@
+import { MovieDetailsContext } from '@/context/showDetailsContext';
+import { useWindowDimensions } from '@/hooks/useWindowDimentions';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect, useContext } from 'react';
 
 const SearchBox = ({ handleSearchInput }: { handleSearchInput: Function }) => {
   const [text, setText] = useState('');
+  const { windowWidth } = useWindowDimensions();
+  const movieContext = useContext(MovieDetailsContext);
+  useEffect(() => {
+    handleClose();
+  }, [windowWidth]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleSearchInput(e.target.value);
@@ -32,6 +39,7 @@ const SearchBox = ({ handleSearchInput }: { handleSearchInput: Function }) => {
         }
       };
       animateSearchBox();
+      movieContext?.setShowDetails(false);
     }
 
     setTimeout(() => {
@@ -47,6 +55,7 @@ const SearchBox = ({ handleSearchInput }: { handleSearchInput: Function }) => {
   const handleClose = () => {
     handleSearchInput('');
     setText('');
+    movieContext?.setShowDetails(false);
     const inputEl =
       document.body.querySelector<HTMLInputElement>('.search-input');
     const crossEl = document.body.querySelector<HTMLElement>('.search-clear');

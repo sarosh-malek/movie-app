@@ -1,9 +1,29 @@
 import { useEffect } from 'react';
 
-export default function MovieDetailCardMobile({ movie }: { movie: any }) {
+interface Props {
+  Title: string;
+  Poster: string;
+  imdbRating: any;
+  Year: string;
+  Runtime: string;
+  Director: string;
+  Plot: string;
+  Language: string;
+}
+
+export default function MovieDetailCardMobile({
+  Title,
+  Poster,
+  imdbRating,
+  Year,
+  Runtime,
+  Director,
+  Plot,
+  Language
+}: Props) {
   useEffect(() => {
     const rattingEl = document.body.querySelector<HTMLDivElement>('.ratting');
-    const per = (movie.imdbRating * 100) / 10;
+    const per = (imdbRating * 100) / 10;
     if (rattingEl) {
       let width = 0;
       const animate = () => {
@@ -20,26 +40,20 @@ export default function MovieDetailCardMobile({ movie }: { movie: any }) {
   return (
     <div className="h-full text-[#d4d7dd]">
       <div className="flex p-4 w-full">
-        <img
-          className="float-left rounded-lg w-28 h-30 mr-4"
-          src={movie.Poster}
-        />
+        {/* eslint-disable-next-line */}
+        <img className="float-left rounded-lg w-28 h-30 mr-4" src={Poster} />
         <div className="w-full">
-          <div className="font-bold text-2xl">{movie.Title}</div>
+          <div className="font-bold text-2xl">{Title}</div>
           <div className="flex gap-4 text-[#abafb4] my-2">
             <div>
-              {movie.imdbRating === 'N/A' ? (
+              {imdbRating === 'N/A' ? (
                 <div className="text-[#00E0FF]">Comming Soon</div>
               ) : (
-                <div>{movie.imdbRating} / 10</div>
+                <div>{imdbRating} / 10</div>
               )}
             </div>
-            <div>
-              {movie.Year.split('-')[1] !== ''
-                ? movie.Year
-                : movie.Year.slice(0, 4)}
-            </div>
-            <div>{movie.Runtime}</div>
+            <div>{Year.split('-')[1] !== '' ? Year : Year.slice(0, 4)}</div>
+            <div>{Runtime}</div>
           </div>
           <div className="grid grid-cols-2">
             <div>
@@ -47,14 +61,14 @@ export default function MovieDetailCardMobile({ movie }: { movie: any }) {
               <div>Language</div>
             </div>
             <div>
-              <div>{movie.Director}</div>
-              <div>{movie.Language}</div>
+              <div>{Director}</div>
+              <div>{Language}</div>
             </div>
           </div>
           <div className="mt-4 flex justify-center w-full gap-2">
             <button
               className="w-full text-[16px] bold bg-[#00E0FF] text-black font-bold py-2 rounded"
-              disabled={movie.imdbRating === 'N/A'}
+              disabled={imdbRating === 'N/A'}
             >
               Play Movie
             </button>
@@ -67,7 +81,7 @@ export default function MovieDetailCardMobile({ movie }: { movie: any }) {
           </div>
         </div>
       </div>
-      <p className="px-4 overflow-hidden break-all">{movie.Plot}</p>
+      <p className="px-4 overflow-hidden break-all mb-4">{Plot}</p>
     </div>
   );
 }
