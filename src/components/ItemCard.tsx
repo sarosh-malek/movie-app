@@ -6,11 +6,15 @@ interface Props {
     muiName: string;
   };
   name: string;
+  color?: string;
+  sideBorder?: string;
 }
 
-export default function ItemCard({ Icon, name }: Props) {
+export default function ItemCard({ Icon, name, color, sideBorder }: Props) {
   return (
-    <div className="flex gap-3 mb-4">
+    <div
+      className={`flex gap-3 mb-4 text-[${color}] ${sideBorder} hover:cursor-pointer`}
+    >
       <div className="flex items-center justify-center">
         <Icon sx={{ width: 20, height: 20 }} />
       </div>

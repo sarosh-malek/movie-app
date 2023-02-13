@@ -13,7 +13,12 @@ export default function ListItems() {
   return (
     <>
       <div className="ml-[52px] my-5">
-        <ItemCard Icon={SearchIcon} name="Discover" />
+        <ItemCard
+          Icon={SearchIcon}
+          name="Discover"
+          color="#00E0FF"
+          sideBorder="border-r-2 border-[#00E0FF]"
+        />
         <ItemCard Icon={PlaylistPlayIcon} name="Playlist" />
         <ItemCard Icon={LiveTvIcon} name="Movie" />
         <ItemCard Icon={TvIcon} name="TV Shows" />
