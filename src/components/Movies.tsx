@@ -14,7 +14,7 @@ export default function Movies({ movieData }: { movieData: any }) {
   const [modalIndex, setModalIndex] = useState(0);
   return (
     <>
-      <div className="movies flex flex-wrap gap-8 justify-between">
+      <div className="movies flex flex-wrap gap-8">
         {movieData.length ? (
           movieData.map((movie: any, index: number) => {
             return (

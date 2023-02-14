@@ -35,11 +35,10 @@ export default function MovieCard({
       setSelectedIndex(index - (index % 4));
     } else if (
       (windowWidth < 1268 && windowWidth >= 1044) ||
-      (windowWidth < 961 && windowWidth >= 737)
+      (windowWidth < 961 && windowWidth > 736)
     ) {
       setSelectedIndex(index - (index % 3));
     } else if (windowWidth <= 736) {
-      console.log(index);
       setSelectedIndex(index);
       setModalIndex(index);
       setShowMobileDetails(true);

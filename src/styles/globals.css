@@ -90,3 +90,34 @@ body {
     display: none;
   }
 }
+
+.movie-details-card {
+  animation: fade-in 1.5s linear;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* .caaard {
+  animation: pinch 2s linear;
+}
+
+@keyframes pinch {
+  0% {
+    height: 0%;
+  }
+
+  100% {
+    height: 100;
+  }
+} */
