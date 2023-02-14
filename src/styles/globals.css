@@ -27,7 +27,12 @@ body {
 
 @media (max-width: 1044px) {
   .sidebar {
-    display: none;
+    position: fixed;
+    left: -100%;
+  }
+
+  .sidebar-menu {
+    display: block;
   }
 
   .movie-feed {
@@ -39,11 +44,25 @@ body {
   }
 }
 
-/* @media (max-width: 1480px) {
-  .movies {
-    justify-content: center;
-  }
-} */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: 0.5s;
+  opacity: 0;
+  visibility: hidden;
+}
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebar.active {
+  left: 0;
+}
 
 @media (max-width: 715px) {
   .search-box {
@@ -95,6 +114,12 @@ body {
   animation: fade-in 1.5s linear;
 }
 
+@media (max-height: 659px) {
+  .movie-feed {
+    max-height: calc(100% - 20%);
+  }
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -107,17 +132,3 @@ body {
     opacity: 1;
   }
 }
-
-/* .caaard {
-  animation: pinch 2s linear;
-}
-
-@keyframes pinch {
-  0% {
-    height: 0%;
-  }
-
-  100% {
-    height: 100;
-  }
-} */

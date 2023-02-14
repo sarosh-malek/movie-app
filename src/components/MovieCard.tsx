@@ -50,50 +50,30 @@ export default function MovieCard({
   };
 
   return (
-    <>
-      <div
-        className="movie-card flex content-center justify-center w-48 h-auto rounded-lg bg-[#394B61] hover:cursor-pointer"
-        id={movie.Title}
-        onClick={handleClick}
-      >
-        <div className="mt-2">
-          {/* eslint-disable-next-line */}
-          <img
-            className="w-44 h-52 rounded-lg"
-            src={movie.Poster}
-            alt={movie.Title}
-          />
-          <div className="mt-2 text-base font-semibold w-40 overflow-hidden text-ellipsis">
-            {movie.Title}
+    <div
+      className="movie-card flex content-center justify-center w-48 h-auto rounded-lg bg-[#394B61] hover:cursor-pointer"
+      id={movie.Title}
+      onClick={handleClick}
+    >
+      <div className="mt-2">
+        {/* eslint-disable-next-line */}
+        <img
+          className="w-44 h-52 rounded-lg"
+          src={movie.Poster}
+          alt={movie.Title}
+        />
+        <div className="mt-2 text-base font-semibold w-40 overflow-hidden text-ellipsis">
+          {movie.Title}
+        </div>
+        <div className="flex mb-4">
+          <div>
+            <PlayCircleOutlinedIcon />
           </div>
-          <div className="flex mb-4">
-            <div>
-              <PlayCircleOutlinedIcon />
-            </div>
-            <div className="ml-4">
-              <ControlPointOutlinedIcon />
-            </div>
+          <div className="ml-4">
+            <ControlPointOutlinedIcon />
           </div>
         </div>
       </div>
-      {/* {showModal && (
-        <Modal
-          setShowModal={setShowModal}
-          children={
-            <MovieDetailCard
-              key={`qw687qwhgahws`}
-              Title={movie.Title}
-              Poster={movie.Poster}
-              imdbRating={movie.imdbRating}
-              Year={movie.Year}
-              Runtime={movie.Runtime}
-              Director={movie.Director}
-              Plot={movie.Plot}
-              Language={movie.Language}
-            />
-          }
-        />
-      )} */}
-    </>
+    </div>
   );
 }

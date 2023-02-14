@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 
 interface Props {
@@ -66,9 +67,12 @@ export default function MovieDetailCard({
     >
       <div className="wrapper w-full bg-[#394B61] rounded-lg">
         <div className="movie-details-card flex  text-[#d4d7dd] rounded-lg">
-          <img
+          <Image
             className="rounded-l-lg min-w-[349px] max-w-[349px] max-h-[50vh]"
             src={Poster}
+            alt={Title}
+            width={349}
+            height={349}
           />
           <div className="p-4">
             <h1 className="text-[2.25rem] font-bold">{Title}</h1>

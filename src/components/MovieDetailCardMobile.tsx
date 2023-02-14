@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect } from 'react';
 
 interface Props {
@@ -41,7 +42,13 @@ export default function MovieDetailCardMobile({
     <div className="h-full text-[#d4d7dd]">
       <div className="flex p-4 w-full">
         {/* eslint-disable-next-line */}
-        <img className="float-left rounded-lg w-28 h-30 mr-4" src={Poster} />
+        <Image
+          className="float-left rounded-lg w-28 h-30 mr-4"
+          width={112}
+          height={114}
+          src={Poster}
+          alt={Title}
+        />
         <div className="w-full">
           <div className="font-bold text-2xl">{Title}</div>
           <div className="flex gap-4 text-[#abafb4] my-2">

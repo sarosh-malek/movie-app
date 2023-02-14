@@ -4,7 +4,11 @@ import { movieData } from '../../data';
 import { useState } from 'react';
 import { debounce } from '../utils/debounce';
 
-export default function Dashboard() {
+export default function Dashboard({
+  ToggleSidebar
+}: {
+  ToggleSidebar: () => void;
+}) {
   const [filteredMovies, setfilteredMovies] = useState<object[]>(
     () => movieData
   );
@@ -18,8 +22,8 @@ export default function Dashboard() {
   const fetcData = debounce(filterMovies, 1000);
 
   return (
-    <div className="w-full h-screen bg-[#273244] overflow-auto">
-      <Navbar handleSearchInput={fetcData} />
+    <div className="dashboard w-full h-screen bg-[#273244] overflow-auto">
+      <Navbar handleSearchInput={fetcData} ToggleSidebar={ToggleSidebar} />
       <Feed movieData={filteredMovies} />
     </div>
   );

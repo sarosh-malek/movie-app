@@ -3,9 +3,15 @@ import Sidebar from '@/components/Sidebar';
 import { Open_Sans } from '@next/font/google';
 import Dashboard from '@/components/Dashboard';
 import MovieContext from '../context/showDetailsContext';
+import { useState } from 'react';
 const sans = Open_Sans({ subsets: ['latin'] });
 
 export default function Home() {
+  const [isOpen, setIsopen] = useState(false);
+
+  const ToggleSidebar = (): void => {
+    isOpen === true ? setIsopen(false) : setIsopen(true);
+  };
   return (
     <>
       <Head>
@@ -16,8 +22,12 @@ export default function Home() {
       </Head>
       <MovieContext>
         <main className={`flex ${sans.className}`}>
-          <Sidebar />
-          <Dashboard />
+          <Sidebar isOpen={isOpen} />
+          <Dashboard ToggleSidebar={ToggleSidebar} />
+          <div
+            className={`sidebar-overlay ${isOpen == true ? 'active' : ''}`}
+            onClick={ToggleSidebar}
+          ></div>
         </main>
       </MovieContext>
     </>
